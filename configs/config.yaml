@@ -1,0 +1,54 @@
+# configs/config.yaml
+server:
+  tcp_listen_port: 9999        # TCP服务监听端口
+  health_check_port: 8080      # 健康检查服务端口
+  max_connections: 1000        # 最大并发连接数
+  read_timeout: 30s            # 读取超时时间
+  write_timeout: 30s           # 写入超时时间
+  max_message_size: 65536      # 最大消息大小(64KB)
+
+database:
+  host: "postgres"             # 数据库主机
+  port: 5432                   # 数据库端口
+  user: "user"                 # 数据库用户
+  password: "pass"             # 数据库密码
+  name: "tcp_proxy"            # 数据库名
+  max_open_conns: 50           # 最大打开连接数
+  max_idle_conns: 25           # 最大空闲连接数
+  conn_max_lifetime: "5m"      # 连接最大生命周期
+
+forwarder:
+  batch_size: 100              # 批量处理大小
+  process_interval: "5s"       # 处理间隔
+  max_processing_workers: 10   # 最大处理工作线程数
+  base_retry_interval: "30s"   # 基础重试间隔
+  max_retry_interval: "10m"    # 最大重试间隔
+
+# 目标服务器配置 - 现在完全在配置文件中管理
+target_servers:
+  - id: "server-1"                    # 服务器唯一标识
+    name: "主业务服务器"               # 服务器显示名称
+    address: "192.168.1.100:8888"     # 服务器地址
+    enabled: true                     # 是否启用
+    timeout: "10s"                    # 连接超时时间
+    max_retries: 5                    # 最大重试次数
+    batch_size: 100                   # 批量处理大小
+    priority: 1                       # 优先级（数字越小优先级越高）
+
+  - id: "server-2"
+    name: "备份服务器"
+    address: "192.168.1.101:8888"
+    enabled: true
+    timeout: "10s"
+    max_retries: 3
+    batch_size: 50
+    priority: 2
+
+  - id: "server-3"
+    name: "日志服务器"
+    address: "192.168.1.102:9999"
+    enabled: false                    # 暂时禁用
+    timeout: "5s"
+    max_retries: 2
+    batch_size: 200
+    priority: 3

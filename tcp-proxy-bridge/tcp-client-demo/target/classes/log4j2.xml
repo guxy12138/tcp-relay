@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF8"?>
+<Configuration>
+    <!--全局参数-->
+    <Properties>
+        <Property name="pattern">[%d{yyyy-MM-dd HH:mm:ss.SSS}] %5p [%t] %c{1.}:%L - %m%n</Property>
+        <Property name="module">tcp-client-zbwt</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${pattern}"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.ebchina.tech" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

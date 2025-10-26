@@ -1,0 +1,12 @@
+server:
+  port: 19001
+spring:
+  application:
+    name: tcp-client-zbwt
+client:
+  address: 127.0.0.1
+  port: 9004
+##mybatis相关配置
+#mybatis-plus:
+#  type-aliases-package: org.example.models.entity
+#  mapper-locations: classpath*:org/example/mapper/xml/*.xml

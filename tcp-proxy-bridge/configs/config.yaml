@@ -24,6 +24,32 @@ forwarder:
   base_retry_interval: "30s"   # 基础重试间隔
   max_retry_interval: "10m"    # 最大重试间隔
 
+# 源服务器配置 - 支持主备切换
+source_servers:
+  primary:
+    id: "primary-server"              # 主服务器唯一标识
+    name: "主源服务器"                # 服务器显示名称
+    address: "192.168.1.100:8888"     # 服务器地址
+    enabled: true                     # 是否启用
+    timeout: "10s"                    # 连接超时时间
+    max_retries: 5                    # 最大重试次数
+    batch_size: 100                   # 批量处理大小
+    health_check_interval: "30s"      # 健康检查间隔
+    health_check_timeout: "5s"        # 健康检查超时
+    failover_threshold: 3             # 故障切换阈值（连续失败次数）
+    
+  backup:
+    id: "backup-server"               # 备用服务器唯一标识
+    name: "备用源服务器"              # 服务器显示名称
+    address: "192.168.1.101:8888"     # 服务器地址
+    enabled: true                     # 是否启用
+    timeout: "10s"                    # 连接超时时间
+    max_retries: 3                    # 最大重试次数
+    batch_size: 50                    # 批量处理大小
+    health_check_interval: "30s"      # 健康检查间隔
+    health_check_timeout: "5s"        # 健康检查超时
+    failover_threshold: 3             # 故障切换阈值（连续失败次数）
+
 # 目标服务器配置 - 现在完全在配置文件中管理
 target_servers:
   - id: "server-1"                    # 服务器唯一标识
